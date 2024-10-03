@@ -40,6 +40,8 @@ onMounted(() => {
       :price="product.price"
     />
   </div>
+
+  <div v-else-if="data.isLoading">Loading...</div>
 </template>
 <style scoped>
 .product-list {

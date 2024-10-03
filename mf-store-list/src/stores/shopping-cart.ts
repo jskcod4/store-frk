@@ -7,18 +7,27 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
 
   function addToCart({ id, name, price }: { id: string; name: string; price: number }) {
     const existingProduct = products.value.find((product) => product.id === id)
-    let quantity = 1
 
     if (existingProduct) {
-      quantity = existingProduct.quantity + 1
+      existingProduct.quantity += 1
+    } else {
+      products.value.push({ id, name, price, quantity: 1 })
     }
-
-    products.value.push({ id, name, price, quantity })
   }
 
   function removeFromCart(id: string) {
     products.value = products.value.filter((product) => product.id !== id)
   }
 
-  return { products, addToCart, totalProductsAdded, removeFromCart }
+  function decrementQuantity(id: string) {
+    const existingProduct = products.value.find((product) => product.id === id)
+
+    if (existingProduct && existingProduct.quantity > 1) {
+      existingProduct.quantity -= 1
+    } else {
+      removeFromCart(id)
+    }
+  }
+
+  return { products, addToCart, totalProductsAdded, removeFromCart, decrementQuantity }
 })
