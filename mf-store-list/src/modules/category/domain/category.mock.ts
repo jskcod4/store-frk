@@ -11,5 +11,5 @@ export const CategoryMock: Category = {
     min: 100,
     max: 200
   },
-  size: ['S', 'M', 'L']
+  sizes: ['S', 'M', 'L']
 }

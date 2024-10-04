@@ -7,5 +7,5 @@ export interface Category {
     min: number
     max: number
   }
-  size: string[]
+  sizes: string[]
 }

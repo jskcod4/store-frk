@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch, type PropType } from 'vue'
+import { onMounted, ref, type PropType } from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -33,40 +33,6 @@ const sortOptions = [
   { name: 'Price: High to Low', href: '#', current: false }
 ]
 
-const subCategories = ref<{ name: string; href: string }[]>([])
-
-const filters = ref<
-  {
-    id: string
-    name: string
-    options: { value: string; label: string; checked: boolean }[]
-  }[]
->([
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: false },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false }
-    ]
-  },
-  {
-    id: 'size',
-    name: 'Size',
-    options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true }
-    ]
-  }
-])
-
 const mobileFiltersOpen = ref(false)
 
 const { repository } = defineProps({
@@ -76,44 +42,11 @@ const { repository } = defineProps({
   }
 })
 
-function transformCategoryToSubCategory(subcategories: string[]) {
-  return subcategories.map((subcategory) => ({
-    name: subcategory,
-    href: subcategory
-  }))
-}
-
-function transformCategoryColorToFilterOptions(colors: string[]) {
-  return colors.map((color) => ({
-    value: color,
-    label: color,
-    checked: false
-  }))
-}
-
-const { data, fetchCategoryDetail } = useFetchCategories(repository)
-
-onMounted(() => {
-  fetchCategoryDetail()
-})
-
-watch(data, ({ category }) => {
-  if (category && category.subcategories.length > 0) {
-    subCategories.value = transformCategoryToSubCategory(category.subcategories)
-  }
-
-  if (category && category.colors.length > 0) {
-    filters.value.push({
-      id: 'color',
-      name: 'Color',
-      options: transformCategoryColorToFilterOptions(category.colors)
-    })
-  }
-})
+const { filters, subCategories } = useFetchCategories(repository)
 </script>
 
 <template>
-  <div class="bg-white">
+  <div id="category-template" class="bg-white">
     <div>
       <!-- Mobile filter dialog -->
       <TransitionRoot as="template" :show="mobileFiltersOpen">
@@ -330,7 +263,7 @@ watch(data, ({ category }) => {
                       />
                       <label
                         :for="`filter-${section.id}-${optionIdx}`"
-                        class="ml-3 text-sm text-gray-600"
+                        class="ml-3 text-sm text-gray-600 first-line:capitalize lowercase"
                       >
                         {{ option.label }}
                       </label>

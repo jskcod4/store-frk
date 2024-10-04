@@ -1,7 +1,15 @@
 import { getAllCategories } from '@/modules/category/application/get-detail/get-detail.category'
 import type { Category } from '@/modules/category/domain/category'
 import type { CategoryRepository } from '@/modules/category/domain/category.repository'
-import { reactive } from 'vue'
+
+import {
+  transformCategoryColorToFilterOptions,
+  transformCategorySizeToFilterOptions,
+  transformCategoryToSubCategory,
+  type UiCategoryFilter
+} from '@/modules/category/infraestructure'
+
+import { onMounted, reactive, ref, watch } from 'vue'
 
 export function useFetchCategories(repository: CategoryRepository) {
   const data = reactive({
@@ -9,6 +17,10 @@ export function useFetchCategories(repository: CategoryRepository) {
     error: false,
     category: {} as Category
   })
+
+  const filters = ref<UiCategoryFilter[]>([])
+
+  const subCategories = ref<{ name: string; href: string }[]>([])
 
   async function fetchCategoryDetail() {
     try {
@@ -23,5 +35,48 @@ export function useFetchCategories(repository: CategoryRepository) {
     }
   }
 
-  return { data, fetchCategoryDetail }
+  onMounted(() => {
+    fetchCategoryDetail()
+  })
+
+  watch(data, ({ category }) => {
+    if (!category) return
+    if (!Object.keys(category).length) return
+
+    if (category.subcategories.length > 0) {
+      subCategories.value = transformCategoryToSubCategory(category.subcategories)
+    }
+
+    if (category.colors.length > 0) {
+      filters.value.push({
+        id: 'color',
+        name: 'Color',
+        options: transformCategoryColorToFilterOptions(category.colors)
+      })
+    }
+
+    if (category.sizes.length > 0) {
+      filters.value.push({
+        id: 'size',
+        name: 'Size',
+        options: transformCategorySizeToFilterOptions(category.sizes)
+      })
+    }
+
+    if (category.price) {
+      filters.value.push({
+        id: 'price',
+        name: 'Price',
+        options: [
+          { value: '0-25', label: '$0 - $25', checked: false },
+          { value: '25-50', label: '$25 - $50', checked: false },
+          { value: '50-100', label: '$50 - $100', checked: false },
+          { value: '100-200', label: '$100 - $200', checked: false },
+          { value: '200+', label: '$200+', checked: false }
+        ]
+      })
+    }
+  })
+
+  return { data, fetchCategoryDetail, filters, subCategories }
 }
