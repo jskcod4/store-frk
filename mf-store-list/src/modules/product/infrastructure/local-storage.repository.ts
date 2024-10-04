@@ -19,8 +19,6 @@ export function createLocalStorageProductRepository(): ProductRepository {
 
       const productsParsed = Array.from(products.entries())
 
-      console.log('productsParsed', productsParsed)
-
       localStorage.setItem('products', JSON.stringify(productsParsed))
 
       await Promise.resolve()

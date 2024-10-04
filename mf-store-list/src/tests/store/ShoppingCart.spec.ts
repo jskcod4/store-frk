@@ -63,6 +63,7 @@ describe('ShoppingCart Store', () => {
   it('Remove repeated item must be decrement products array and must be cero', () => {
     const store = useShoppingCartStore()
     const QUATITY_TO_ADD = 5
+
     expect(store.products).toHaveLength(0)
 
     const { id, name, price } = ProductMock
@@ -81,15 +82,16 @@ describe('ShoppingCart Store', () => {
   it('Remove repeat item must be decrement product quatity', () => {
     const store = useShoppingCartStore()
     const products = ProductsMock
+    const QUATITY_RESULT = 1
 
     products.forEach((product) => {
       store.addToCart(product)
     })
 
-    for (let i = 0; i < products.length - 1; i++) {
+    for (let i = 0; i < products.length - QUATITY_RESULT; i++) {
       store.removeFromCart(products[i].id)
     }
 
-    expect(store.products).toHaveLength(1)
+    expect(store.products).toHaveLength(QUATITY_RESULT)
   })
 })

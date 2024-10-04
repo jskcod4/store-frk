@@ -1,27 +1,23 @@
 <script setup lang="ts">
-import ProductCard from '@/components/ProductCard.vue'
-import { getAllProducts } from '@/modules/product/application/get-all'
-import type { Product } from '@/modules/product/domain/product'
-import { createLocalStorageProductRepository } from '@/modules/product/infrastructure'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, ref, type PropType } from 'vue'
+import { DefaultProductRepository } from '@/config'
 
-const data = reactive({
-  isLoading: false,
-  error: false,
-  products: [] as Product[]
+import { DefaultErrorFetchMessage, type ProductRepository } from '@/modules/product/domain'
+
+import ProductCard from '@/components/ProductCard.vue'
+
+import ProductCardSkeleton from './ProductCardSkeleton.vue'
+import { useFetchProducts } from '@/hooks/fetch-products.hooks'
+
+const { repository } = defineProps({
+  repository: {
+    type: Object as PropType<ProductRepository>,
+    default: DefaultProductRepository
+  }
 })
 
-async function fetchProducts() {
-  try {
-    data.isLoading = true
-    const res = await getAllProducts(createLocalStorageProductRepository())
-    data.products = res
-  } catch (error) {
-    data.error = true
-  } finally {
-    data.isLoading = false
-  }
-}
+const messageError = ref(DefaultErrorFetchMessage)
+const { data, fetchProducts } = useFetchProducts(repository)
 
 onMounted(() => {
   fetchProducts()
@@ -41,7 +37,13 @@ onMounted(() => {
     />
   </div>
 
-  <div v-else-if="data.isLoading">Loading...</div>
+  <div v-if="data.isLoading" class="product-list">
+    <ProductCardSkeleton v-for="i in 6" :key="i" />
+  </div>
+
+  <div v-if="data.error" class="product-wrapper-error">
+    <p>{{ messageError }}</p>
+  </div>
 </template>
 <style scoped>
 .product-list {

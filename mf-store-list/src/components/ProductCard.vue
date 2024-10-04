@@ -2,9 +2,11 @@
 import type { Product } from '@/modules/product/domain/product'
 import { useShoppingCartStore } from '@/stores/shopping-cart'
 import IconShoppingcart from './icons/IconShoppingcart.vue'
+import { ref } from 'vue'
 
 const product = defineProps<Omit<Product, 'description' | 'stock'>>()
 const store = useShoppingCartStore()
+const test = ref('test')
 
 const addToCart = () => {
   store.addToCart({
