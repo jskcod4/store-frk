@@ -1,14 +1,23 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 
 import { shallowMount } from '@vue/test-utils'
 import ProductList from '@/components/ProductList.vue'
 import { useFetchProducts } from '@/hooks/fetch-products.hooks'
 import { DefaultProductRepository } from '@/config'
 import { ProductsMock } from '@/modules/product/shared/product.mock'
+import { createTestingPinia } from '@pinia/testing'
 
 describe('ProductList', () => {
   it('renders properly', () => {
-    const wrapper = shallowMount(ProductList)
+    const wrapper = shallowMount(ProductList, {
+      global: {
+        plugins: [
+          createTestingPinia({
+            createSpy: vi.fn()
+          })
+        ]
+      }
+    })
     expect(wrapper.get('.product-list').isVisible()).toBe(true)
   })
 

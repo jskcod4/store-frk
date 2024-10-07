@@ -1,8 +1,18 @@
+import type { Criteria } from '@/modules/shared'
 import type { Product } from '../domain/product'
 import type { ProductRepository } from '../domain/product.repository'
 
 export function createLocalStorageProductRepository(): ProductRepository {
   return {
+    async findByCriteria(criteria: Criteria<Product>): Promise<Product[]> {
+      return new Promise((resolve) => {
+        const products = localStorage.getItem('products')
+        const convertedProducts = (products ? JSON.parse(products) : []) as Product[]
+        setTimeout(() => {
+          resolve(convertedProducts)
+        }, 2000)
+      })
+    },
     async getProducts(): Promise<Product[]> {
       const products = localStorage.getItem('products')
       return products ? JSON.parse(products) : []

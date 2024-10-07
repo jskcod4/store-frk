@@ -8,6 +8,7 @@ import {
   transformCategoryToSubCategory,
   type UiCategoryFilter
 } from '@/modules/category/infraestructure'
+import { useProductStore } from '@/stores/product'
 
 import { onMounted, reactive, ref, watch } from 'vue'
 
@@ -21,6 +22,8 @@ export function useFetchCategories(repository: CategoryRepository) {
   const filters = ref<UiCategoryFilter[]>([])
 
   const subCategories = ref<{ name: string; href: string }[]>([])
+
+  const store = useProductStore()
 
   async function fetchCategoryDetail() {
     try {
@@ -38,6 +41,14 @@ export function useFetchCategories(repository: CategoryRepository) {
   onMounted(() => {
     fetchCategoryDetail()
   })
+
+  watch(
+    filters,
+    (change) => {
+      store.addFilters(change)
+    },
+    { deep: true }
+  )
 
   watch(data, ({ category }) => {
     if (!category) return

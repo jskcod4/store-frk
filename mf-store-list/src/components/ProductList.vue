@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, type PropType } from 'vue'
+import { ref, type PropType } from 'vue'
 import { DefaultProductRepository } from '@/config'
 
 import { DefaultErrorFetchMessage, type ProductRepository } from '@/modules/product/domain'
@@ -17,11 +17,7 @@ const { repository } = defineProps({
 })
 
 const messageError = ref(DefaultErrorFetchMessage)
-const { data, fetchProducts } = useFetchProducts(repository)
-
-onMounted(() => {
-  fetchProducts()
-})
+const { data } = useFetchProducts(repository)
 </script>
 
 <template>

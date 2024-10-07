@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, type PropType } from 'vue'
+import { ref, type PropType } from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -133,8 +133,9 @@ const { filters, subCategories } = useFetchCategories(repository)
                           <label
                             :for="`filter-mobile-${section.id}-${optionIdx}`"
                             class="ml-3 min-w-0 flex-1 text-gray-500"
-                            >{{ option.label }}</label
                           >
+                            {{ option.label }}
+                          </label>
                         </div>
                       </div>
                     </DisclosurePanel>
@@ -148,7 +149,7 @@ const { filters, subCategories } = useFetchCategories(repository)
 
       <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900"></h1>
 
           <div class="flex items-center">
             <Menu as="div" class="relative inline-block text-left">
@@ -260,6 +261,7 @@ const { filters, subCategories } = useFetchCategories(repository)
                         type="checkbox"
                         :checked="option.checked"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        v-model="option.checked"
                       />
                       <label
                         :for="`filter-${section.id}-${optionIdx}`"

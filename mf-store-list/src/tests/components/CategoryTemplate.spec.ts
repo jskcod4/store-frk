@@ -2,12 +2,17 @@ import { DefaultCategoryRepository } from '@/config'
 import { useFetchCategories } from '@/hooks/fetch-categories.hooks'
 import { CategoryMock } from '@/modules/category/domain'
 import CategoryTemplate from '@/templates/CategoryTemplate.vue'
+import { createTestingPinia } from '@pinia/testing'
 import { shallowMount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 describe('CategoryTemplate.vue', () => {
   it('Render', () => {
-    const wrapper = shallowMount(CategoryTemplate)
+    const wrapper = shallowMount(CategoryTemplate, {
+      global: {
+        plugins: [createTestingPinia({ createSpy: vi.fn })]
+      }
+    })
 
     expect(wrapper.get('#category-template').isVisible()).toBe(true)
   })

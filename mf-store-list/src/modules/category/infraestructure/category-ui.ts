@@ -1,3 +1,5 @@
+import { Criteria } from '@/modules/shared'
+
 export interface UiCategoryFilter {
   id: string
   name: string
@@ -6,6 +8,17 @@ export interface UiCategoryFilter {
     label: string
     checked: boolean
   }[]
+}
+
+export function transformUICategoryToCriteria<T>(items: UiCategoryFilter[]) {
+  const criteria = new Criteria<T>()
+
+  for (const item of items) {
+    const activeOptions = item.options.filter((option) => option.checked)
+    criteria.where(item.id, 'EQUAL', activeOptions)
+  }
+
+  return criteria
 }
 
 export function transformCategoryToSubCategory(subcategories: string[]) {
