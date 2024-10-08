@@ -2,9 +2,15 @@ name: Deploy to AWS Lambda
 
 on:
   push:
-    paths: -'./ms-aws-store-products/**'
     branches:
       - master
+    paths:
+      -'ms-aws-store-products/**'
+      -'github/workflows/main.yml'
+
+defaults:
+  run:
+    working-directory: Deploy to AWS Lambda
 
 jobs:
   deploy:
