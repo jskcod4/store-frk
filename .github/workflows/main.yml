@@ -9,7 +9,7 @@ on:
 
 defaults:
   run:
-    working-directory: Deploy to AWS Lambda
+    working-directory: ms-aws-store-products
 
 jobs:
   deploy:
