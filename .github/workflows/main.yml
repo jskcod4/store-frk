@@ -3,6 +3,8 @@ name: Deploy to AWS Lambda
 on:
   push:
     paths: -'ms-aws-store-products/**'
+    branches:
+      - master
 
 jobs:
   deploy:
