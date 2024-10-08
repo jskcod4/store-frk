@@ -1,7 +1,9 @@
 name: Deploy to AWS Lambda
 
 on:
-  push: -'ms-aws-store-products/**'
+  push:
+    paths: -'ms-aws-store-products/**'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
