@@ -5,8 +5,7 @@ on:
     branches:
       - master
     paths:
-      -'ms-aws-store-products/**'
-      -'.github/workflows/main.yml'
+      - ms-aws-store-products/**
 
 defaults:
   run:
