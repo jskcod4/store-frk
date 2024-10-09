@@ -8,6 +8,7 @@ const { MongoClient } = require('mongodb')
 const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PW}@cluster0.qtzr3.mongodb.net/?retryWrites=true&w=majority`
 const client = new MongoClient(uri)
 
+console.log('uri:', uri)
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
     await client.connect()
