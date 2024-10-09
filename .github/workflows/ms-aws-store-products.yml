@@ -36,6 +36,12 @@ jobs:
         run: npm install
         working-directory: ms-aws-store-products
 
+      - name: 'Create env file'
+        run: |
+          echo "MONGO_PW=${{ vars.MONGO_PW }}" >> .env
+          echo "MONGO_USERNAME=${{ vars.MONGO_USERNAME }}" >> .env
+          echo "MONG_DB_NAME=${{ vars.MONG_DB_NAME }}" >> .env
+          
 
       - name: Run all commands
         run: npm run all
