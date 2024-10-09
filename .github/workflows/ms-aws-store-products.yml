@@ -27,7 +27,7 @@ jobs:
         working-directory: ms-aws-store-products
 
       - name: Run all commands
-        run: npm run all
+        run: npm run all && ls -l
         working-directory: ms-aws-store-products
         env:
           MONGO_PW: ${{ secrets.MONGO_PW }}
@@ -40,5 +40,5 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-2"
-          function-name: "ms-get-products"
+          lambda-name: "ms-get-products"
           zip-file: "./dist/lambda.zip"
