@@ -9,7 +9,11 @@ const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PW}
 const client = new MongoClient(uri)
 
 console.log('uri:', uri)
+
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  if (process.env.MONGO_USERNAME) {
+    console.log('MONGO_USERNAME:', process.env.MONGO_USERNAME)
+  }
   try {
     await client.connect()
 
