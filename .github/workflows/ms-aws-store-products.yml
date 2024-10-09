@@ -35,7 +35,7 @@ jobs:
           MONG_DB_NAME: ${{ secrets.MONG_DB_NAME }}
 
       - name: Deploy to AWS Lambda
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: kazimanzurrashid/aws-lambda-update-action@v2.0.3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
