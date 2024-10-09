@@ -22,6 +22,17 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+        env:
+          MONGO_PW: ${{ secrets.MONGO_PW }}
+          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          MONG_DB_NAME: ${{ secrets.MONG_DB_NAME }}
+
       - name: Install dependencies
         run: npm install
         working-directory: ms-aws-store-products
