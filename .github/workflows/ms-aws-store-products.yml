@@ -36,6 +36,7 @@ jobs:
 
       - name: Deploy to AWS Lambda
         uses: kazimanzurrashid/aws-lambda-update-action@v2.0.3
+        working-directory: ms-aws-store-products
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
