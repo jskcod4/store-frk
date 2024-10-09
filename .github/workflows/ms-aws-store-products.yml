@@ -38,7 +38,7 @@ jobs:
         working-directory: ms-aws-store-products
 
       - name: Run all commands
-        run: npm run all && ls -l
+        run: npm run all && cd dist/ && ls -l
         working-directory: ms-aws-store-products
         env:
           MONGO_PW: ${{ secrets.MONGO_PW }}
