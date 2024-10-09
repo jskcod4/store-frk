@@ -18,7 +18,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
     return {
       statusCode: 200,
-      body: 'products'
+      body: `products: ${products.length}`
     }
   } catch (error) {
     console.log(error)
