@@ -22,15 +22,6 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Deploy to AWS Lambda
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: "us-east-2"
-          function-name: "ms-get-products"
-          zip-file: "./dist/lambda.zip"
-
       - name: Install dependencies
         run: npm install
         working-directory: ms-aws-store-products
@@ -42,3 +33,12 @@ jobs:
           MONGO_PW: ${{ secrets.MONGO_PW }}
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
           MONG_DB_NAME: ${{ secrets.MONG_DB_NAME }}
+
+      - name: Deploy to AWS Lambda
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "us-east-2"
+          function-name: "ms-get-products"
+          zip-file: "./dist/lambda.zip"
