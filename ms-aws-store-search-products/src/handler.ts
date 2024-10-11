@@ -23,8 +23,8 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const [min, max] = params
         Object.assign(query, {
           prices: {
-            $gte: parseInt(min),
-            $lte: parseInt(max)
+            $gte: parseInt(min, 10),
+            $lte: parseInt(max, 10)
           }
         })
       }
@@ -33,7 +33,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const [min] = params
         Object.assign(query, {
           prices: {
-            $gte: parseInt(min)
+            $gte: parseInt(min, 10)
           }
         })
       }
