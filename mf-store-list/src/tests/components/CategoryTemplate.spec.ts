@@ -1,4 +1,4 @@
-import { DefaultCategoryRepository } from '@/config'
+import { LocalStorageCategoryRepository } from '@/config'
 import { useFetchCategories } from '@/hooks/fetch-categories.hooks'
 import { CategoryMock } from '@/modules/category/domain'
 import CategoryTemplate from '@/templates/CategoryTemplate.vue'
@@ -18,7 +18,7 @@ describe('CategoryTemplate.vue', () => {
   })
 
   it('initial state make empty', () => {
-    const fakeRepository = DefaultCategoryRepository
+    const fakeRepository = LocalStorageCategoryRepository
     const { data } = useFetchCategories(fakeRepository)
 
     expect(data.category).toEqual({})
@@ -27,7 +27,7 @@ describe('CategoryTemplate.vue', () => {
   })
 
   it('fetch category', async () => {
-    const fakeRepository = DefaultCategoryRepository
+    const fakeRepository = LocalStorageCategoryRepository
 
     fakeRepository.saveCategoryDetail(CategoryMock)
 
@@ -41,7 +41,7 @@ describe('CategoryTemplate.vue', () => {
   })
 
   it('fetch products error', async () => {
-    const fakeRepository = DefaultCategoryRepository
+    const fakeRepository = LocalStorageCategoryRepository
 
     fakeRepository.saveCategoryDetail(CategoryMock)
 
@@ -59,7 +59,7 @@ describe('CategoryTemplate.vue', () => {
   })
 
   it('fetch category with set is loading as false', async () => {
-    const fakeRepository = DefaultCategoryRepository
+    const fakeRepository = LocalStorageCategoryRepository
 
     fakeRepository.saveCategoryDetail(CategoryMock)
 

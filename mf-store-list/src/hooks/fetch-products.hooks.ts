@@ -35,7 +35,6 @@ export function useFetchProducts(repository: ProductRepository) {
       const criteriaParams = transformUICategoryToCriteria<Product>(uiChanges)
       data.isLoading = true
       const res = await findByCriteria(repository, criteriaParams)
-      // console.log(res)
       data.products = res
       data.error = false
     } catch (error) {

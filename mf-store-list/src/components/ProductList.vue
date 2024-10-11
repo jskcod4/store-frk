@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue'
-import { DefaultProductRepository } from '@/config'
+import { AwsProductRepository } from '@/config'
 
 import { DefaultErrorFetchMessage, type ProductRepository } from '@/modules/product/domain'
 
@@ -12,7 +12,7 @@ import { useFetchProducts } from '@/hooks/fetch-products.hooks'
 const { repository } = defineProps({
   repository: {
     type: Object as PropType<ProductRepository>,
-    default: DefaultProductRepository
+    default: AwsProductRepository
   }
 })
 

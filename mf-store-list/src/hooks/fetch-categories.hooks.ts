@@ -44,8 +44,9 @@ export function useFetchCategories(repository: CategoryRepository) {
 
   watch(
     filters,
-    (change) => {
-      store.addFilters(change)
+    (changesNews, changesOld) => {
+      if (changesOld.length === 0) return
+      store.addFilters(changesNews)
     },
     { deep: true }
   )
@@ -58,8 +59,10 @@ export function useFetchCategories(repository: CategoryRepository) {
       subCategories.value = transformCategoryToSubCategory(category.subcategories)
     }
 
+    const localFilters: UiCategoryFilter[] = []
+
     if (category.colors.length > 0) {
-      filters.value.push({
+      localFilters.push({
         id: 'color',
         name: 'Color',
         options: transformCategoryColorToFilterOptions(category.colors)
@@ -67,7 +70,7 @@ export function useFetchCategories(repository: CategoryRepository) {
     }
 
     if (category.sizes.length > 0) {
-      filters.value.push({
+      localFilters.push({
         id: 'size',
         name: 'Size',
         options: transformCategorySizeToFilterOptions(category.sizes)
@@ -75,7 +78,7 @@ export function useFetchCategories(repository: CategoryRepository) {
     }
 
     if (category.price) {
-      filters.value.push({
+      localFilters.push({
         id: 'price',
         name: 'Price',
         options: [
@@ -87,6 +90,8 @@ export function useFetchCategories(repository: CategoryRepository) {
         ]
       })
     }
+
+    filters.value = localFilters
   })
 
   return { data, fetchCategoryDetail, filters, subCategories }

@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import ProductList from '@/components/ProductList.vue'
 import { useFetchProducts } from '@/hooks/fetch-products.hooks'
-import { DefaultProductRepository } from '@/config'
+import { LocalStorageProductRepository } from '@/config'
 import { ProductsMock } from '@/modules/product/shared/product.mock'
 import { createTestingPinia } from '@pinia/testing'
 
@@ -29,7 +29,7 @@ describe('ProductList', () => {
   })
 
   it('initial state make empty', () => {
-    const fakeRepository = DefaultProductRepository
+    const fakeRepository = LocalStorageProductRepository
     const { data } = useFetchProducts(fakeRepository)
 
     expect(data.products).toEqual([])
@@ -38,7 +38,7 @@ describe('ProductList', () => {
   })
 
   it('fetch products', async () => {
-    const fakeRepository = DefaultProductRepository
+    const fakeRepository = LocalStorageProductRepository
 
     fakeRepository.saveProducts(ProductsMock)
 
@@ -52,7 +52,7 @@ describe('ProductList', () => {
   })
 
   it('fetch products error', async () => {
-    const fakeRepository = DefaultProductRepository
+    const fakeRepository = LocalStorageProductRepository
 
     fakeRepository.saveProducts(ProductsMock)
 
@@ -70,7 +70,7 @@ describe('ProductList', () => {
   })
 
   it('fetch products with success set isLoading as false', async () => {
-    const fakeRepository = DefaultProductRepository
+    const fakeRepository = LocalStorageProductRepository
 
     fakeRepository.saveProducts(ProductsMock)
 

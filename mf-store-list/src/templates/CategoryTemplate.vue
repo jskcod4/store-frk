@@ -22,7 +22,7 @@ import {
   Squares2X2Icon
 } from '@heroicons/vue/24/solid'
 import { useFetchCategories } from '@/hooks/fetch-categories.hooks'
-import { DefaultCategoryRepository } from '@/config'
+import { LocalStorageCategoryRepository } from '@/config'
 import type { CategoryRepository } from '@/modules/category/domain'
 
 const sortOptions = [
@@ -38,7 +38,7 @@ const mobileFiltersOpen = ref(false)
 const { repository } = defineProps({
   repository: {
     type: Object as PropType<CategoryRepository>,
-    default: DefaultCategoryRepository
+    default: LocalStorageCategoryRepository
   }
 })
 
