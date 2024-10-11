@@ -52,11 +52,10 @@ jobs:
 
       - name: AWS CLI v2
         uses: imehedi/actions-awscli-v2@latest
-        working-directory: ms-aws-store-products
         with:
           args: "lambda update-function-code \
             --function-name arn:aws:ms-get-products \
-            --zip-file fileb://lambda.zip"
+            --zip-file fileb://ms-aws-store-products/lambda.zip"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
