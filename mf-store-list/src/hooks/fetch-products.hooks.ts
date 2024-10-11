@@ -6,7 +6,6 @@ import { getAllProducts } from '@/modules/product/application/get-all'
 import { findByCriteria } from '@/modules/product/application/find-by-criterial'
 import type { ProductRepository } from '@/modules/product/domain'
 import type { Product } from '@/modules/product/domain/product'
-import { Criteria } from '@/modules/shared'
 import { useProductStore } from '@/stores/product'
 import { onMounted, reactive, watch } from 'vue'
 
