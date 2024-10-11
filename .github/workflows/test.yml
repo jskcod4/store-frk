@@ -24,7 +24,7 @@ jobs:
         working-directory: ms-aws-store-products
 
       - name: Run all commands
-        run: npm run all && cd dist/ && ls -l
+        run: npm run all
         working-directory: ms-aws-store-products
         env:
           MONGO_PW: ${{ secrets.MONGO_PW }}
@@ -32,7 +32,7 @@ jobs:
           MONG_DB_NAME: ${{ secrets.MONG_DB_NAME }}
 
       - name: Move lambda.zip
-        run: mv dist/lambda.zip .
+        run: mv dist/lambda.zip .&& ls -l
         working-directory: ms-aws-store-products
 
       - name: AWS CLI v2
