@@ -21,6 +21,7 @@ import {
   PlusIcon,
   Squares2X2Icon
 } from '@heroicons/vue/24/solid'
+import CategorySkeleton from '@/components/CategorySkeleton.vue'
 import { useFetchCategories } from '@/hooks/fetch-categories.hooks'
 import { AwsCategoryRepository } from '@/config'
 import type { CategoryRepository } from '@/modules/category/domain'
@@ -42,7 +43,7 @@ const { repository } = defineProps({
   }
 })
 
-const { filters, subCategories } = useFetchCategories(repository)
+const { filters, subCategories, data } = useFetchCategories(repository)
 </script>
 
 <template>
@@ -213,8 +214,10 @@ const { filters, subCategories } = useFetchCategories(repository)
           <h2 id="products-heading" class="sr-only">Products</h2>
 
           <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+            <CategorySkeleton v-if="data.isLoading" />
+
             <!-- Filters -->
-            <form class="hidden lg:block">
+            <form v-if="!data.isLoading" class="hidden lg:block">
               <h3 class="sr-only">Categories</h3>
               <ul
                 role="list"
