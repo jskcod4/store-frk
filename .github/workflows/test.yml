@@ -45,9 +45,11 @@ jobs:
       - name: Verify lambda.zip moved
         run: |
           if [ ! -f lambda.zip ]; then
+            ls -l
             echo "lambda.zip not found in root directory!"
             exit 1
           fi
+        working-directory: ms-aws-store-products
 
       - name: AWS CLI v2
         uses: imehedi/actions-awscli-v2@latest
