@@ -35,9 +35,7 @@
     "typescript": "^3.3.3"
   },
   "dependencies": {
-    "@codelytv/criteria": "^2.0.0",
-    "@codelytv/criteria-from-url": "^1.0.0",
-    "dotenv": "^16.4.5",
-    "mongodb": "^4.17.2"
+    "mongodb": "^4.17.2",
+    "dotenv": "^16.4.5"
   }
 }
