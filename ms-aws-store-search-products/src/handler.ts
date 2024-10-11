@@ -17,7 +17,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     let query = {}
 
     if (prices && prices.length) {
-      const params = prices.replaceAll(' ', '').replaceAll('$', '').split('-')
+      const params = prices.replace(/ /g, '').replace('$', '').replace('$', '').split('-')
 
       if (params.length === 2) {
         const [min, max] = params
