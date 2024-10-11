@@ -4,6 +4,7 @@ import type { CategoryRepository } from '@/modules/category/domain/category.repo
 
 import {
   transformCategoryColorToFilterOptions,
+  transformCategoryPriceToFilterOptions,
   transformCategorySizeToFilterOptions,
   transformCategoryToSubCategory,
   type UiCategoryFilter
@@ -77,17 +78,11 @@ export function useFetchCategories(repository: CategoryRepository) {
       })
     }
 
-    if (category.price) {
+    if (category.prices.length > 0) {
       localFilters.push({
         id: 'price',
         name: 'Price',
-        options: [
-          { value: '0-25', label: '$0 - $25', checked: false },
-          { value: '25-50', label: '$25 - $50', checked: false },
-          { value: '50-100', label: '$50 - $100', checked: false },
-          { value: '100-200', label: '$100 - $200', checked: false },
-          { value: '200+', label: '$200+', checked: false }
-        ]
+        options: transformCategoryPriceToFilterOptions(category.prices)
       })
     }
 

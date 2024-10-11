@@ -7,9 +7,6 @@ export const CategoryMock: Category = {
   name: 'ELECTRONIC',
   colors: ['NAVY BLUE', 'BLACK', 'WHITE'],
   subcategories: ['SMARTPHONE', 'TABLETS', 'LAPTOPS'],
-  price: {
-    min: 100,
-    max: 200
-  },
+  prices: ['$0 - $25', '$25 - $50', '$50 - $100', '$100 - $200', '$200+'],
   sizes: ['S', 'M', 'L']
 }

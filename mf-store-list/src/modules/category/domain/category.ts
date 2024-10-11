@@ -3,9 +3,6 @@ export interface Category {
   name: string
   colors: string[]
   subcategories: string[]
-  price: {
-    min: number
-    max: number
-  }
+  prices: string[]
   sizes: string[]
 }

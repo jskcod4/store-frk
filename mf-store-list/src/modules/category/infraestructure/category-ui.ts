@@ -43,3 +43,11 @@ export function transformCategorySizeToFilterOptions(sizes: string[]) {
     checked: false
   }))
 }
+
+export function transformCategoryPriceToFilterOptions(prices: string[]) {
+  return prices.map((price) => ({
+    value: price,
+    label: price,
+    checked: false
+  }))
+}
