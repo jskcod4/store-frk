@@ -52,6 +52,7 @@ jobs:
 
       - name: AWS CLI v2
         uses: imehedi/actions-awscli-v2@latest
+        working-directory: ms-aws-store-products
         with:
           args: "lambda update-function-code \
             --function-name arn:aws:ms-get-products \
@@ -60,4 +61,3 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-2"
-        working-directory: ms-aws-store-products
