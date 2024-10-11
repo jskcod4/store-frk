@@ -24,23 +24,37 @@ jobs:
         working-directory: ms-aws-store-products
 
       - name: Run all commands
-        run: npm run all
+        run: npm run all && cd dist/ && ls -l
         working-directory: ms-aws-store-products
         env:
           MONGO_PW: ${{ secrets.MONGO_PW }}
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
           MONG_DB_NAME: ${{ secrets.MONG_DB_NAME }}
 
+      - name: Verify lambda.zip creation
+        run: |
+          if [ ! -f ms-aws-store-products/dist/lambda.zip ]; then
+            echo "lambda.zip not found!"
+            exit 1
+          fi
+
       - name: Move lambda.zip
-        run: mv dist/lambda.zip .&& ls -l
+        run: mv ms-aws-store-products/dist/lambda.zip .
         working-directory: ms-aws-store-products
+
+      - name: Verify lambda.zip moved
+        run: |
+          if [ ! -f lambda.zip ]; then
+            echo "lambda.zip not found in root directory!"
+            exit 1
+          fi
 
       - name: AWS CLI v2
         uses: imehedi/actions-awscli-v2@latest
         with:
           args: "lambda update-function-code \
             --function-name arn:aws:ms-get-products \
-            --zip-file fileb:///lambda.zip"
+            --zip-file fileb://lambda.zip"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
