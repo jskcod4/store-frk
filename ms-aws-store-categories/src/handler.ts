@@ -13,12 +13,12 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     await client.connect()
 
     const db = client.db(process.env.MONG_DB_NAME)
-    const collection = db.collection('products')
-    const products = await collection.find({}).toArray()
+    const collection = db.collection('categories')
+    const categories = await collection.find({}).toArray()
 
     return {
       statusCode: 200,
-      body: products
+      body: categories
     }
   } catch (error) {
     console.log(error)
