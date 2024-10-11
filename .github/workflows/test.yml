@@ -39,7 +39,7 @@ jobs:
           fi
 
       - name: Move lambda.zip
-        run: ls -l && mv dist/lambda.zip .
+        run: mv dist/lambda.zip . && ls -l
         working-directory: ms-aws-store-products
 
       - name: Verify lambda.zip moved
