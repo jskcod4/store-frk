@@ -14,3 +14,6 @@ export const URL_GET_PRODUCTS =
 
 export const URL_GET_CATEGORIES =
   'https://bo61hvbujj.execute-api.us-east-2.amazonaws.com/prod/categories'
+
+export const URL_SEARCH_PRODUCTS =
+  'https://bo61hvbujj.execute-api.us-east-2.amazonaws.com/prod/search'

@@ -64,7 +64,7 @@ export function useFetchCategories(repository: CategoryRepository) {
 
     if (category.colors.length > 0) {
       localFilters.push({
-        id: 'color',
+        id: 'colors',
         name: 'Color',
         options: transformCategoryColorToFilterOptions(category.colors)
       })
@@ -72,7 +72,7 @@ export function useFetchCategories(repository: CategoryRepository) {
 
     if (category.sizes.length > 0) {
       localFilters.push({
-        id: 'size',
+        id: 'sizes',
         name: 'Size',
         options: transformCategorySizeToFilterOptions(category.sizes)
       })
@@ -80,7 +80,7 @@ export function useFetchCategories(repository: CategoryRepository) {
 
     if (category.prices.length > 0) {
       localFilters.push({
-        id: 'price',
+        id: 'prices',
         name: 'Price',
         options: transformCategoryPriceToFilterOptions(category.prices)
       })
