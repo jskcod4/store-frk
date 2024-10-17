@@ -37,6 +37,7 @@ export function useFetchProducts(repository: ProductRepository) {
       data.products = res
       data.error = false
     } catch (error) {
+      console.log('error', error)
       data.error = true
     } finally {
       data.isLoading = false

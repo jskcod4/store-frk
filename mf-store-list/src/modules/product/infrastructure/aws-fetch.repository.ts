@@ -53,7 +53,7 @@ export const transformCriteriaToAwsParams = (criteria: Criteria<Product>): URLSe
     if (criteria.filters[key]) {
       const data = criteria.filters[key]
       console.log((data as any).value)
-      params.set(`${key}[]`, (data as any).value)
+      params.set(`${key}`, (data as any).value)
     }
   }
   return params
