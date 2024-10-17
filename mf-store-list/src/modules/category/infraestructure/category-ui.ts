@@ -3,11 +3,13 @@ import { Criteria } from '@/modules/shared'
 export interface UiCategoryFilter {
   id: string
   name: string
-  options: {
-    value: string
-    label: string
-    checked: boolean
-  }[]
+  options: UiCategoryFilterOption[]
+}
+
+export interface UiCategoryFilterOption {
+  value: string
+  label: string
+  checked: boolean
 }
 
 export function transformUICategoryToCriteria<T>(items: UiCategoryFilter[]) {
@@ -15,7 +17,10 @@ export function transformUICategoryToCriteria<T>(items: UiCategoryFilter[]) {
 
   for (const item of items) {
     const activeOptions = item.options.filter((option) => option.checked)
-    criteria.where(item.id, 'EQUAL', activeOptions)
+
+    for (const option of activeOptions) {
+      criteria.where(item.id, 'EQUAL', option.value)
+    }
   }
 
   return criteria
