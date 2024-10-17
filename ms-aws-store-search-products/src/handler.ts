@@ -27,7 +27,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       if (params.length === 2) {
         const [min, max] = params
         Object.assign(query, {
-          prices: {
+          price: {
             $gte: parseInt(min, 10),
             $lte: parseInt(max, 10)
           }
@@ -37,13 +37,14 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       if (params.length === 1) {
         const [min] = params
         Object.assign(query, {
-          prices: {
+          price: {
             $gte: parseInt(min, 10)
           }
         })
       }
     }
 
+    console.log('query', query)
     const db = client.db(process.env.MONG_DB_NAME)
     const collection = db.collection('products')
     const products = await collection.find(query).toArray()
