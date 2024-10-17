@@ -12,6 +12,8 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   try {
     await client.connect()
 
+    console.log('event', event)
+
     const { prices } = event.queryStringParameters || {}
 
     let query = {}
