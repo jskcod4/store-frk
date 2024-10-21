@@ -25,11 +25,12 @@ const { data } = useFetchProducts(repository)
     <ProductCard
       v-for="product in data.products"
       :key="product.id"
-      :id="product.id"
+      :id="product.id.toString()"
       :imageUrl="product.imageUrl"
       :name="product.name"
       :category="product.category"
       :price="product.price"
+      :tag="product.tag"
     />
   </div>
 
@@ -44,7 +45,7 @@ const { data } = useFetchProducts(repository)
 <style scoped>
 .product-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1rem;
 }
 </style>

@@ -1,6 +1,14 @@
+<script setup>
+const { fill } = defineProps({
+  fill: {
+    type: String,
+    default: '#000000'
+  }
+})
+</script>
 <template>
   <svg
-    fill="#000000"
+    :fill="fill"
     width="800px"
     height="800px"
     viewBox="0 0 64 64"

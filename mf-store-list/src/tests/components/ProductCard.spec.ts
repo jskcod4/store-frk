@@ -16,6 +16,6 @@ describe('ProductCard', () => {
 
     expect(wrapper.text()).toContain(productMock.name)
     expect(wrapper.text()).toContain(productMock.price)
-    expect(wrapper.text()).toContain(productMock.category)
+    expect(wrapper.text()).toContain(productMock.tag)
   })
 })

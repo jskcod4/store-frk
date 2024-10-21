@@ -7,7 +7,7 @@ import { findByCriteria } from '@/modules/product/application/find-by-criterial'
 import type { ProductRepository } from '@/modules/product/domain'
 import type { Product } from '@/modules/product/domain/product'
 import { useProductStore } from '@/stores/product'
-import { onMounted, reactive, watch } from 'vue'
+import { onMounted, onUnmounted, reactive } from 'vue'
 
 export function useFetchProducts(repository: ProductRepository) {
   const data = reactive({
@@ -18,15 +18,21 @@ export function useFetchProducts(repository: ProductRepository) {
 
   const store = useProductStore()
 
-  watch(store.activeFilters, async (change) => {
-    if (!change) return
-    if (!change.length) return
-
-    await fetchFindByCriteria(change)
+  const unsubscribe = store.$onAction(({ name, store, args, after, onError }) => {
+    after((result) => {
+      if (name === 'addFilters') {
+        fetchFindByCriteria(store.activeFilters)
+      }
+    })
+    onError((error) => {})
   })
 
   onMounted(() => {
     fetchProducts()
+  })
+
+  onUnmounted(() => {
+    unsubscribe()
   })
 
   async function fetchFindByCriteria(uiChanges: UiCategoryFilter[]) {
@@ -57,5 +63,5 @@ export function useFetchProducts(repository: ProductRepository) {
     }
   }
 
-  return { data, fetchProducts }
+  return { data, fetchProducts, fetchFindByCriteria }
 }

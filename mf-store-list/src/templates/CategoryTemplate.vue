@@ -43,7 +43,9 @@ const { repository } = defineProps({
   }
 })
 
-const { filters, subCategories, data } = useFetchCategories(repository)
+const emit = defineEmits(['change-filter'])
+
+const { filters, subCategories, data, applyFilters } = useFetchCategories(repository)
 </script>
 
 <template>
@@ -78,7 +80,7 @@ const { filters, subCategories, data } = useFetchCategories(repository)
                 class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl"
               >
                 <div class="flex items-center justify-between px-4">
-                  <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+                  <h2 class="text-lg font-medium text-gray-900">Filtros</h2>
                   <button
                     type="button"
                     class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
@@ -91,7 +93,7 @@ const { filters, subCategories, data } = useFetchCategories(repository)
 
                 <!-- Filters -->
                 <form class="mt-4 border-t border-gray-200">
-                  <h3 class="sr-only">Categories</h3>
+                  <h3 class="sr-only">Categorias</h3>
                   <ul role="list" class="px-2 py-3 font-medium text-gray-900">
                     <li v-for="category in subCategories" :key="category.name">
                       <a :href="category.href" class="block px-2 py-3">{{ category.name }}</a>
@@ -109,7 +111,9 @@ const { filters, subCategories, data } = useFetchCategories(repository)
                       <DisclosureButton
                         class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
                       >
-                        <span class="font-medium text-gray-900">{{ section.name }}</span>
+                        <span class="text-lg font-black text-black">
+                          {{ section.name }}
+                        </span>
                         <span class="ml-6 flex items-center">
                           <PlusIcon v-if="!open" class="h-5 w-5" aria-hidden="true" />
                           <MinusIcon v-else class="h-5 w-5" aria-hidden="true" />
@@ -211,14 +215,14 @@ const { filters, subCategories, data } = useFetchCategories(repository)
         </div>
 
         <section aria-labelledby="products-heading" class="pb-24 pt-6">
-          <h2 id="products-heading" class="sr-only">Products</h2>
+          <h2 id="products-heading" class="sr-only">Productos</h2>
 
           <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
             <CategorySkeleton v-if="data.isLoading" />
 
             <!-- Filters -->
             <form v-if="!data.isLoading" class="hidden lg:block">
-              <h3 class="sr-only">Categories</h3>
+              <h3 class="sr-only">Categorias</h3>
               <ul
                 role="list"
                 class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
@@ -243,7 +247,7 @@ const { filters, subCategories, data } = useFetchCategories(repository)
                   <DisclosureButton
                     class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
                   >
-                    <span class="font-medium text-gray-900">{{ section.name }}</span>
+                    <span class="text-sm font-bold text-black">{{ section.name }}</span>
                     <span class="ml-6 flex items-center">
                       <PlusIcon v-if="!open" class="h-5 w-5" aria-hidden="true" />
                       <MinusIcon v-else class="h-5 w-5" aria-hidden="true" />
@@ -276,6 +280,34 @@ const { filters, subCategories, data } = useFetchCategories(repository)
                   </div>
                 </DisclosurePanel>
               </Disclosure>
+
+              <div class="flex flex-row justify-start items-center mt-8">
+                <button
+                  class="bg-indigo-600 text-zinc-50 py-3 px-8 text-white-600 font-medium rounded w-full"
+                  style="background-color: var(--primary-color)"
+                  @click="applyFilters"
+                >
+                  Aplicar
+                </button>
+
+                <svg
+                  class="w-6 h-6 text-gray-800 dark:text-gray-400 ml-6"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                  />
+                </svg>
+              </div>
             </form>
 
             <div class="lg:col-span-3">

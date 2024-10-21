@@ -10,6 +10,11 @@
   font-weight: normal;
 }
 
+:root {
+  --primary-color: #603bb6;
+  --primary-color-light: #d6c5f6;
+}
+
 body {
   min-height: 100vh;
   color: var(--color-text);

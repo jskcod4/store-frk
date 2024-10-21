@@ -33,16 +33,8 @@ export function createAwsFetchProductRepository(): ProductRepository {
   }
 }
 
-interface ProductFetchResponse {
-  statusCode: number
-  body: Product[]
-}
-
-export const awsProductAdapter = async (response: ProductFetchResponse): Promise<Product[]> => {
-  if (response.statusCode !== 200) {
-    throw new Error('Error fetching products')
-  }
-  return response.body
+export const awsProductAdapter = async (response: Product[]): Promise<Product[]> => {
+  return response
 }
 
 export const transformCriteriaToAwsParams = (criteria: Criteria<Product>): URLSearchParams => {
@@ -52,7 +44,6 @@ export const transformCriteriaToAwsParams = (criteria: Criteria<Product>): URLSe
   for (const key of keys) {
     if (criteria.filters[key]) {
       const data = criteria.filters[key]
-      console.log((data as any).value)
       params.set(`${key}`, (data as any).value)
     }
   }

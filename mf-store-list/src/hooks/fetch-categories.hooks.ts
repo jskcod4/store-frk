@@ -39,18 +39,15 @@ export function useFetchCategories(repository: CategoryRepository) {
     }
   }
 
+  function applyFilters(evt: Event) {
+    evt.preventDefault()
+    store.addFilters(filters.value)
+    store.changeFilters()
+  }
+
   onMounted(() => {
     fetchCategoryDetail()
   })
-
-  watch(
-    filters,
-    (changesNews, changesOld) => {
-      if (changesOld.length === 0) return
-      store.addFilters(changesNews)
-    },
-    { deep: true }
-  )
 
   watch(data, ({ category }) => {
     if (!category) return
@@ -73,7 +70,7 @@ export function useFetchCategories(repository: CategoryRepository) {
     if (category.sizes.length > 0) {
       localFilters.push({
         id: 'sizes',
-        name: 'Size',
+        name: 'Talla',
         options: transformCategorySizeToFilterOptions(category.sizes)
       })
     }
@@ -81,7 +78,7 @@ export function useFetchCategories(repository: CategoryRepository) {
     if (category.prices.length > 0) {
       localFilters.push({
         id: 'prices',
-        name: 'Price',
+        name: 'Precio',
         options: transformCategoryPriceToFilterOptions(category.prices)
       })
     }
@@ -89,5 +86,5 @@ export function useFetchCategories(repository: CategoryRepository) {
     filters.value = localFilters
   })
 
-  return { data, fetchCategoryDetail, filters, subCategories }
+  return { data, fetchCategoryDetail, filters, subCategories, applyFilters }
 }

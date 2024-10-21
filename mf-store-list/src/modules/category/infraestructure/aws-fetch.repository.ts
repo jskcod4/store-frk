@@ -18,9 +18,17 @@ interface CategoryFetchResponse {
   body: Category[]
 }
 
-export const awsCategoryAdapter = async (response: CategoryFetchResponse): Promise<Category> => {
-  if (response.statusCode !== 200) {
-    throw new Error('Error fetching products')
+export const awsCategoryAdapter = async (response: Category[]): Promise<Category> => {
+  if (response.length >= 1) {
+    return response[0]
   }
-  return response.body[0]
+
+  return {
+    id: '0',
+    name: 'Default category',
+    colors: [],
+    subcategories: [],
+    prices: [],
+    sizes: []
+  }
 }

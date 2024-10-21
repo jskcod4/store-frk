@@ -11,5 +11,7 @@ export const useProductStore = defineStore('product', () => {
     }
   }
 
-  return { activeFilters, addFilters }
+  function changeFilters() {}
+
+  return { activeFilters, addFilters, changeFilters }
 })
