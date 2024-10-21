@@ -20,7 +20,7 @@ export function useFetchCategories(repository: CategoryRepository) {
     category: {} as Category
   })
 
-  const filters = ref<UiCategoryFilter[]>([])
+  const uiFilters = ref<UiCategoryFilter[]>([])
 
   const subCategories = ref<{ name: string; href: string }[]>([])
 
@@ -41,8 +41,15 @@ export function useFetchCategories(repository: CategoryRepository) {
 
   function applyFilters(evt: Event) {
     evt.preventDefault()
-    store.addFilters(filters.value)
+    store.addFilters(uiFilters.value)
     store.changeFilters()
+  }
+
+  function clearFilters(evt: Event) {
+    evt.preventDefault()
+    store.clearFilters()
+    store.changeFilters()
+    setUiFilters(data.category)
   }
 
   onMounted(() => {
@@ -57,6 +64,10 @@ export function useFetchCategories(repository: CategoryRepository) {
       subCategories.value = transformCategoryToSubCategory(category.subcategories)
     }
 
+    setUiFilters(category)
+  })
+
+  function setUiFilters(category: Category) {
     const localFilters: UiCategoryFilter[] = []
 
     if (category.colors.length > 0) {
@@ -83,8 +94,15 @@ export function useFetchCategories(repository: CategoryRepository) {
       })
     }
 
-    filters.value = localFilters
-  })
+    uiFilters.value = localFilters
+  }
 
-  return { data, fetchCategoryDetail, filters, subCategories, applyFilters }
+  return {
+    data,
+    fetchCategoryDetail,
+    uiFilters,
+    subCategories,
+    applyFilters,
+    clearFilters
+  }
 }

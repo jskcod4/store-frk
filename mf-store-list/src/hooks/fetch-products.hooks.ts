@@ -20,7 +20,7 @@ export function useFetchProducts(repository: ProductRepository) {
 
   const unsubscribe = store.$onAction(({ name, store, args, after, onError }) => {
     after((result) => {
-      if (name === 'addFilters') {
+      if (['addFilters', 'clearFilters'].includes(name)) {
         fetchFindByCriteria(store.activeFilters)
       }
     })

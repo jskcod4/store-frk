@@ -1,6 +1,6 @@
 import type { UiCategoryFilter } from '@/modules/category/infraestructure'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export const useProductStore = defineStore('product', () => {
   const activeFilters = ref<UiCategoryFilter[]>([])
@@ -13,5 +13,9 @@ export const useProductStore = defineStore('product', () => {
 
   function changeFilters() {}
 
-  return { activeFilters, addFilters, changeFilters }
+  function clearFilters() {
+    activeFilters.value = []
+  }
+
+  return { activeFilters, addFilters, changeFilters, clearFilters }
 })

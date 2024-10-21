@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type PropType } from 'vue'
+import { computed, ref, type PropType } from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -25,6 +25,7 @@ import CategorySkeleton from '@/components/CategorySkeleton.vue'
 import { useFetchCategories } from '@/hooks/fetch-categories.hooks'
 import { AwsCategoryRepository } from '@/config'
 import type { CategoryRepository } from '@/modules/category/domain'
+import { useProductStore } from '@/stores/product'
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -43,9 +44,12 @@ const { repository } = defineProps({
   }
 })
 
-const emit = defineEmits(['change-filter'])
+const store = useProductStore()
 
-const { filters, subCategories, data, applyFilters } = useFetchCategories(repository)
+const hasActiveFilters = computed(() => store.activeFilters.length > 0)
+
+const { uiFilters, subCategories, data, applyFilters, clearFilters } =
+  useFetchCategories(repository)
 </script>
 
 <template>
@@ -102,7 +106,7 @@ const { filters, subCategories, data, applyFilters } = useFetchCategories(reposi
 
                   <Disclosure
                     as="div"
-                    v-for="section in filters"
+                    v-for="section in uiFilters"
                     :key="section.id"
                     class="border-t border-gray-200 px-4 py-6"
                     v-slot="{ open }"
@@ -238,7 +242,7 @@ const { filters, subCategories, data, applyFilters } = useFetchCategories(reposi
 
               <Disclosure
                 as="div"
-                v-for="section in filters"
+                v-for="section in uiFilters"
                 :key="section.id"
                 class="border-b border-gray-200 py-6"
                 v-slot="{ open }"
@@ -291,6 +295,7 @@ const { filters, subCategories, data, applyFilters } = useFetchCategories(reposi
                 </button>
 
                 <svg
+                  v-if="hasActiveFilters"
                   class="w-6 h-6 text-gray-800 dark:text-gray-400 ml-6"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
@@ -298,6 +303,7 @@ const { filters, subCategories, data, applyFilters } = useFetchCategories(reposi
                   height="24"
                   fill="none"
                   viewBox="0 0 24 24"
+                  @click="clearFilters"
                 >
                   <path
                     stroke="currentColor"
