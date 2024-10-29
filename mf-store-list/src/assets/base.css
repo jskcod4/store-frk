@@ -11,8 +11,10 @@
 }
 
 :root {
-  --primary-color: #603bb6;
+  --primary-color: #6925fb;
   --primary-color-light: #d6c5f6;
+
+  --text-dark-color: #656565;
 }
 
 body {

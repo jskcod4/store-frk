@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import router from '@/router'
+
 import type { Product } from '@/modules/product/domain/product'
 import { useShoppingCartStore } from '@/stores/shopping-cart'
+
 import IconShoppingcart from './icons/IconShoppingcart.vue'
 
 const product = defineProps<Omit<Product, 'description' | 'stock'>>()
@@ -13,11 +16,20 @@ const addToCart = () => {
     price: product.price
   })
 }
+
+function goToProductDetail() {
+  router.push({ name: 'ProductDetail', params: { id: product.id } })
+}
 </script>
 <template>
   <div class="product-card">
     <div class="product-card-body">
-      <img :src="product.imageUrl" :alt="product.name" />
+      <img
+        :src="product.imageUrl"
+        :alt="product.name"
+        :title="'Ver más detailles de ' + product.name"
+        @click="goToProductDetail"
+      />
     </div>
     <div class="product-card-content">
       <h3 :title="product.name">{{ product.name }}</h3>
@@ -69,6 +81,7 @@ const addToCart = () => {
   width: 100%;
   height: 250px;
   object-fit: contain;
+  cursor: pointer;
 }
 
 .product-card-content {

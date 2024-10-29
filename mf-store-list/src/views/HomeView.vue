@@ -1,10 +1,10 @@
 <script setup>
 import ProductList from '@/components/ProductList.vue'
-import CategoryTemplate from '@/templates/CategoryTemplate.vue'
+import CategoryLayout from '@/layouts/CategoryLayout.vue'
 </script>
 
 <template>
-  <CategoryTemplate>
+  <CategoryLayout>
     <ProductList />
-  </CategoryTemplate>
+  </CategoryLayout>
 </template>
